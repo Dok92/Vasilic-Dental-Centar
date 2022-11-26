@@ -189,9 +189,9 @@ function initMap() {
         ]
 	});
 
-    var marker = new google.maps.Marker({
+    new google.maps.Marker({
     position: map.getCenter(),
-    icon: ardorPin,
+    icon: '',
     map: map
     });
 }
