@@ -8682,7 +8682,7 @@ textarea::placeholder {
 .gallery-slide {
     overflow: hidden;
     width: 100%;
-    height: 600px;
+    height: 800px;
     border-radius: 20px
 }
 
@@ -8711,7 +8711,7 @@ textarea::placeholder {
 
 #video-gal-section {
     width: 100%;
-    height: 1000px;
+    height: 500px;
     background-color: #fff;
     padding: 120px 0
 }
@@ -10793,7 +10793,7 @@ textarea::placeholder {
         margin-top: 35px
     }
     .gallery-slide {
-        height: 495px
+        height: 795px
     }
     .video-gal-text {
         flex-basis: 50%;
@@ -11024,7 +11024,7 @@ textarea::placeholder {
         width: 80px
     }
     .gallery-slide {
-        height: 450px
+        height: 750px
     }
     .gallery-enterior {
         flex-basis: 44%;
@@ -11532,7 +11532,7 @@ textarea::placeholder {
         width: 50%
     }
     .gallery-slide {
-        height: 400px
+        height: 700px
     }
     .video-gal-text {
         margin-top: 0;
@@ -12034,7 +12034,7 @@ textarea::placeholder {
         font-size: 13px
     }
     .gallery-slide {
-        height: 300px
+        height: 600px
     }
     #stomatoloski-centar {
         height: 432px
@@ -13128,7 +13128,7 @@ textarea::placeholder {
             width: 34px
         }
         .gallery-slide {
-            height: 230px
+            height: 300px
         }
         .about-service-text,
         .left-text,
@@ -13242,7 +13242,7 @@ textarea::placeholder {
             width: 80%
         }
         .gallery-slide {
-            height: 222px;
+            height: 280px;
             margin-top: 20px
         }
         #header #video {
@@ -14166,7 +14166,7 @@ textarea::placeholder {
         #video-gal-section,
         .services-wrap {
             padding: 40px 0!important;
-            margin-bottom: 70px
+            /* margin-bottom: 70px */
         }
         #all-news-wrap {
             padding-top: 40px!important
@@ -14263,7 +14263,7 @@ textarea::placeholder {
             bottom: -10px
         }
         .gallery-slide {
-            height: 340px
+            height: 400px
         }
         .episodes .slick-dots {
             left: 0!important
