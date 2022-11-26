@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+
+<!--FONTOVI-->
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700,800" rel="stylesheet">
+
+    <title>Simić Dent Banja Luka - Centar za estetsku stomatologiju</title>
+    
+    <!--favicon-->
+
+    <!-- <link rel="apple-touch-icon" sizes="76x76" href="https://simicdent.com/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://simicdent.com/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://simicdent.com/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="https://simicdent.com/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="https://simicdent.com/img/favicon/safari-pinned-tab.svg" color="#de1e39">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#de1e39"> -->
+    
+   <!-- General meta tags -->
+    
+    <meta name="description" content="Centar za estetsku stomatologiju Simić DENT, osnovan je 2009. godine od strane Dr Gordane Simić, nalazi se na izuzetno atraktivnoj lokaciji u samom centru Banja Luke (prekoputa stare autobuske stanice). Ključne odrednice filozofije Centra su profesionalnost, znanje, iskustvo, rad sa najsavremenijom i najkvalitetnijomopremom i materijalima, kao i istrajnost u tome da nijedan oralni problem.nije nerješiv.">
+
+	<!-- Open graph -->
+	<meta property="og:title" content="Simić-dent" />  
+	<meta property="og:url" content="http://www.simicdent.com/">
+	<meta property="og:description" content="Centar za estetsku stomatologiju Simić DENT, osnovan je 2009. godine od strane Dr Gordane Simić, nalazi se na izuzetno atraktivnoj lokaciji u samom centru Banja Luke (prekoputa stare autobuske stanice). Ključne odrednice filozofije Centra su profesionalnost, znanje, iskustvo, rad sa najsavremenijom i najkvalitetnijomopremom i materijalima, kao i istrajnost u tome da nijedan oralni problem.nije nerješiv.">  
+    <meta property="og:image" content="http://www.simicdent.com/img/dns-meta.jpg">
+    
+<!--CSS-->
+    
+	<link rel="stylesheet" type='text/css' href="https://simicdent.com/css/main.css">
+     
+<body>   
+     
+<div id='admin-wrap'>
+    <div class='admin-nav'>
+        <img src="https://simicdent.com/img/admin-cover.jpg">
+        <div class='nav-flex'>
+
+            <div class='flex-one admin-logo'>
+                <img src="https://simicdent.com/img/simic-dent.svg">
+            </div>
+
+            <div class='flex-one admin-main-nav'>
+                            <!-- <h1>ADMINISTRATORSKI PANEL</h1> -->
+                        </div>
+
+        </div>
+    </div>
+    
+
+<p class='admin-copy'>2018 - Sva prava zadržana @ Simić Dent - Made by <a href='https://www.mania.marketing/' target="_blank" class='mania'>MANIA</a></p> 
+
+<div id="deleteModal" class='deletemodal'>
+    <div class='deleteq'>
+        <div class='deleteqwrapper'>
+            <p>Da li želite da obrišete?</p>
+            <div class='buttondane'>
+                <button class='da'>DA</button>
+                <button class='ne'>NE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+
+<script src="https://simicdent.com/js/javascript.js"></script> 
+
+<!--MODAL PRIKAZA AKTIVNOSTI-->
+<script type="text/javascript">
+    $('.getId').click(function(event) {
+        var id = this.id;
+        $.ajax({
+            method: 'GET', // Type of response and matches what we said in the route
+            url: 'https://simicdent.com/admin/aktivnosti/'+this.id, // This is the url we gave in the route
+            success: function(response){ // What to do if we succeed
+                $('.modal-open').click(function(){
+    $('#activity-modal').addClass('modal-anim');
+
+    $('.exit-activity-modal').click(function(){
+        $('#activity-modal').removeClass('modal-anim');
+    })
+})
+                var text = '<tr><th>Aktivnosti</th><th>Datum</th></tr>';
+                var i = 0;
+                if(response == ''){
+                    text += '<tr>';
+                    text += '<td>No activity </td>'; 
+                    text += '<td> - </td>';  
+                    text += '</tr>';
+                }
+                else{
+                    $.each(response, function(k, v) {
+                        var arr = v.split('|');
+                        text += '<tr>';
+                        text += '<td>' + arr[0] + '</td>'; 
+                        text += '<td>' + arr[1] + '</td>';  
+                        text += '</tr>';
+                    });
+                } 
+                $;
+                $('#myModalLabel').html($('#nalog_'+id).text());   
+                $('#modal-tabela').html(text);   
+            },
+            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                console.log(JSON.stringify(jqXHR));
+                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+            }
+        });
+
+    });
+</script>
+
+<script>
+    $( function() {
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
+    } );
+</script>
+<!-- SORTIRANJE GALERIJE -->
+<script type="text/javascript">
+    $('#sortable img').mouseup(function()
+    {
+        setTimeout(function()
+        {
+            var ids = [];
+            $("#sortable img").each(function() {                
+                ids.push($(this).attr('id'));
+            });
+            if(ids)
+            {
+                $.ajax({
+                    url:'https://simicdent.com/save-gallery',
+                    type:'POST',
+                    dataType:'json',
+                    data: {
+                            _token: '',
+                            ids : ids,
+                        },
+                    success: function(respond)
+                   {    
+                        console.log(respond);
+                   },
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        console.log(XMLHttpRequest);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    }  
+                });
+            }
+        }, 500);   
+    });
+    
+   
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+
+<html lang="sr">
+<head>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-KRKGJ3X');</script>
+    <!-- End Google Tag Manager -->
+
+
+    <!--FONTOVI-->
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700,800" rel="stylesheet">
+
+    <title>Simić Dent Banja Luka - Centar za estetsku stomatologiju</title>
+    
+    <!--favicon-->
+
+    <link rel="apple-touch-icon" sizes="76x76" href="https://simicdent.com/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://simicdent.com/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://simicdent.com/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="https://simicdent.com/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="https://simicdent.com/img/favicon/safari-pinned-tab.svg" color="#de1e39">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#de1e39">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+   <!-- General meta tags -->
+    
+    <meta name="description" content="Centar za estetsku stomatologiju Simić DENT, osnovan je 2009. godine od strane Dr Gordane Simić, nalazi se na izuzetno atraktivnoj lokaciji u samom centru Banja Luke (prekoputa stare autobuske stanice). Ključne odrednice filozofije Centra su profesionalnost, znanje, iskustvo, rad sa najsavremenijom i najkvalitetnijomopremom i materijalima, kao i istrajnost u tome da nijedan oralni problem, nije nerješiv.">
+
+	<!-- Open graph -->
+  	<meta property="og:title" content="Simić dent" />  
+	<meta property="og:url" content="http://www.simicdent.com/">
+	<meta property="og:description" content="Centar za estetsku stomatologiju Simić DENT, osnovan je 2009. godine od strane Dr Gordane Simić, nalazi se na izuzetno atraktivnoj lokaciji u samom centru Banja Luke (prekoputa stare autobuske stanice). Ključne odrednice filozofije Centra su profesionalnost, znanje, iskustvo, rad sa najsavremenijom i najkvalitetnijomopremom i materijalima, kao i istrajnost u tome da nijedan oralni problem, nije nerješiv.">  
+    <meta property="og:image" content="https://simicdent.com/img/meta-thumb.png">
+      
+<!--CSS-->
+    <link rel="stylesheet" type='text/css' href="https://simicdent.com/css/main.css">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-61527041-14"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-61527041-14');
+</script>
+
+</head>
+<body>
+<!-- Facebook Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+        document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', '342964303075956');
+    fbq('set','agent','tmgoogletagmanager', '342964303075956');
+    fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+               src="https://www.facebook.com/tr?id=342964303075956&ev=PageView&noscript=1"
+    /></noscript>
+<!-- End Facebook Pixel Code -->
+
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KRKGJ3X"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+     
+<div class="alert-succ">
+  
+</div> 
+<div id='main-wrap'>
+  <!--ZAKAZI TERMIN MODAL-->
+<div id="termin" class='scheduel'>
+        <div class='termin-wrap'>
+          <div class="close-scheduel"><span>X</span></div>
+
+            <div class='termin-blok-1'>
+                <div class='schedule'>
+                    <h1 class='red-termin'>ZAKAŽITE BESPLATAN PREGLED</h1>
+                </div>
+                <div class="contact-termin">
+                    <h1 class='white-termin'>+387 51 230 700</h1>
+                </div>
+            </div>
+
+            <div class='termin-blok-2'>
+                <div class='info-blok'>
+                    <div class="radno-vrijeme">
+                        <img alt='Simić dent' src='https://simicdent.com/img/clock.svg'>
+                        <span class='working-h'>RADNO VRIJEME</span>
+                        <div class="working-days first">
+                            <p class="days">Ponedeljak - Petak</p>
+                            <p class='days'>-</p>
+                            <p class='days'>08:00 - 20:00</p>
+                        </div>
+                        <div class="working-days">
+                            <p class="days">Subota</p>
+                            <p class='days'>-</p>
+                            <p class='days'>09:00 - 13:00</p>
+                        </div>
+                        <div class="working-days">
+                            <p class="days">Nedelja</p>
+                            <p class='days'>-</p>
+                            <p class='days'>Neradni dan</p>
+                        </div>
+                        <div class="working-days">
+                            <p class="days">Adresa</p>
+                            <p class='days'>-</p>
+                            <p class='days'>Vidovdanska 2, Banja Luka</p>
+                        </div>
+                    </div>
+                    <div class="info-contact radno-vrijeme">
+                        <div class="radno-vrijeme">
+                            <img alt='Simić dent' src='https://simicdent.com/img/clock.svg'>
+                            <span class='working-h'>KONTAKT</span>
+                            <div class="working-days first">
+                                <p class="days">Mob:</p>
+                                <p class='days'>+387 65 233 88 (<b>VIBER</b>)</p>
+                            </div>
+                            <div class="working-days">
+                                <p class="days">Tel:</p>
+                                <p class='days'>+387 51 230 700</p>
+                            </div>
+                            <div class="working-days">
+                                <p class="days">Tel:</p>
+                                <p class='days'>+387 51 230 701</p>
+                            </div>
+                            <div class="working-days">
+                                <p class="days">E-mail:</p>
+                                <p class='days'>ordinacija@simicdent.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='info-blok'>
+                <form class="form" action="https://simicdent.com/kontakt-zahtjev" method="POST"> 
+                    <div class="radno-vrijeme">
+                        <img alt='Simić dent' src='https://simicdent.com/img/clock.svg'>
+                         <span class='working-h'>ZAKAŽITE TERMIN</span>
+                        
+                       
+                        <input placeholder="Ime i Prezime" class='termin-input first' type='text' name="ime" value="">
+
+                        
+                        <input type="text" name="security1" value="" style="display: none;">
+
+                        <input class='termin-input' placeholder="Kontakt telefon" type='text' name="telefon" value="">
+                        
+                        <input type="hidden" name="security2" value="">
+
+                        <input class='termin-input' placeholder="E-mail" type='email' name="mail" value="">
+                                              </div>
+
+                    <div class="radno-vrijeme">
+                    <img alt='Simić dent' src='https://simicdent.com/img/clock.svg' class='hide-img'>
+                        <span class='working-h'></span>
+                        <textarea class='termin-ta full-2 captcha-input' name="poruka" placeholder="Poruka"></textarea>
+                                                  <button class='book'>
+                            POŠTALJI ZAHTJEV
+                            <img alt='Simić dent' class="first-arrow" src='https://simicdent.com/img/right-arrow.svg'>
+                            <img alt='Simić dent' class="second-arrow" src='https://simicdent.com/img/right-arrow.svg'>
+                            <img alt='Simić dent' class="third-arrow" src='https://simicdent.com/img/right-arrow.svg'>
+                        </button>
+                        <input type="hidden" name="_token" value="">
+                    </div>
+                </form>
+                </div>
+              
+                </div>
+            </div>
+</div>
+<div class='page-loader'></div>
+<div class='backtotop'>
+     <img alt='Simić dent' src="https://simicdent.com/img/down-arrow.svg">
+ </div>
+<div class='nav-button'>
+    <div class='nav-content'>
+        <img alt='Simić dent' class='open-menu' src="https://simicdent.com/img/hamburger.png">
+        <div class='social-net'>
+                <a href='https://www.facebook.com/SimicDent/' target="_blank" class="icon-facebook fb-hover"><span class='fb'>Facebook</span></a>
+                <a href='https://www.instagram.com/simicdent/' target="_blank"  class="icon-instagram inst-hover"><span class='fb'>Instagram</span></a>
+                <a href='https://www.youtube.com/channel/UCYZHw63WwgO3XyXNlwT0Yqg' target="_blank"  class="icon-youtube youtube-hover"><span class='fb'>Youtube</span></a>
+        </div>
+    </div>
+</div>
+
+<div class='nav-main'>
+  <div class="nav-main-wrap">
+      <h1 class='red-head'>MENI <span class='close-button'><img alt='Simić dent' class='close-menu' src="https://simicdent.com/img/hamburger.png"></span> </h1>
+      <ul>
+          <li><a href='https://simicdent.com'>Početna</a></li>
+          <li class='open-dropdown-content-nav'><a>Usluge</a>
+            <ul class='dropdown-content-nav'>
+                
+                                    <li>
+                        <a href='https://simicdent.com/usluge/6/estetska-stomatologija'>ESTETSKA STOMATOLOGIJA</a>
+                    </li>
+                                    <li>
+                        <a href='https://simicdent.com/usluge/8/stomatoloska-protetika'>STOMATOLOŠKA PROTETIKA</a>
+                    </li>
+                                    <li>
+                        <a href='https://simicdent.com/usluge/10/parodontologija'>PARODONTOLOGIJA</a>
+                    </li>
+                                    <li>
+                        <a href='https://simicdent.com/usluge/11/oralna-hirurgija'>ORALNA HIRURGIJA</a>
+                    </li>
+                                    <li>
+                        <a href='https://simicdent.com/usluge/12/konzervativna-stomatologija-i-endodoncija'>KONZERVATIVNA STOMATOLOGIJA I ENDODONCIJA</a>
+                    </li>
+                                    <li>
+                        <a href='https://simicdent.com/usluge/13/djecija-i-preventivna-stomatologija'>DJEČIJA I PREVENTIVNA STOMATOLOGIJA</a>
+                    </li>
+                                    <li>
+                        <a href='https://simicdent.com/usluge/14/ortodoncija'>ORTODONCIJA</a>
+                    </li>
+                                    <li>
+                        <a href='https://simicdent.com/usluge/15/tretmani-hijaluronom'>TRETMANI HIJALURONOM</a>
+                    </li>
+                                    <li>
+                        <a href='https://simicdent.com/usluge/16/laseroterapija'>LASEROTERAPIJA</a>
+                    </li>
+                                    <li>
+                        <a href='https://simicdent.com/usluge/17/ozonoterapija-ili-terapija-ozonom'>OZONOTERAPIJA ILI TERAPIJA OZONOM</a>
+                    </li>
+                                    <li>
+                        <a href='https://simicdent.com/usluge/18/rendgen-dijagnostika'>RENDGEN DIJAGNOSTIKA</a>
+                    </li>
+                                    <li>
+                        <a href='https://simicdent.com/usluge/19/zubni-implantati'>ZUBNI IMPLANTATI</a>
+                    </li>
+                                
+            </ul>
+          </li>
+          <li><a href='https://simicdent.com#clanovi' class='scroll_to'>Tim</a></li>
+          <li><a class="open-gallery-ab">Galerija</a></li>
+          <li><a href='https://simicdent.com#dent-tours' class='scroll_to'>Dentalni turizam</a></li>
+          <li><a href='https://simicdent.com/sve-novosti'>Novosti</a></li>
+          <li><a href='https://simicdent.com#footer' class='scroll_to'>Kontakt</a></li>
+          <li >
+          <ul class='dropdown'>
+            <li class='dropdown-open-nav'><img alt='Simić dent' class='lang-pic' src='https://simicdent.com/img/lang-red.svg'>BiH <img class='down-arrow-nav' src='https://simicdent.com/img/down-arrow-gray.svg' alt='down-arrow-pic'></li>
+            <li>
+                <ul class='dropdown-content'>
+                    <li><a href="https://simicdent.com/">BiH</a></li>
+                    <li><a href="https://simicdent.com/index-en">English</a></li>
+                    <li><a href="https://simicdent.com/index-de">Deutsch</a></li>
+                    <li><a href="https://simicdent.com/index-it">Italian</a></li>
+                    <li><a href="https://simicdent.com/index-slo">Slovenščina</a></li>
+                </ul>
+            </li>
+                </ul>
+          </li>
+      </ul>
+      
+  </div>
+  <div class="footer-nav">
+  <div class='footer-copy-wrap'>
+                <div class='social-net'>
+                        <a href='https://www.facebook.com/SimicDent/' target="_blank"  class="icon-facebook fb-hover"><span class='fb'>Facebook</span></a>
+                        <a href='https://www.instagram.com/simicdent/' target="_blank"  class="icon-instagram inst-hover"><span class='fb'>Instagram</span></a>
+                        <a href='https://www.youtube.com/channel/UCYZHw63WwgO3XyXNlwT0Yqg' target="_blank"  class="icon-youtube youtube-hover"><span class='fb'>Youtube</span></a>
+                </div>
+                <div class='social-net'>
+                        <span class="icon-lokacija fb-hover"><span class='fb'> Vidovdanska 2, Banja Luka</span></span>
+                        <span class="icon-telefon inst-hover"><span class='fb'>+387 51 230-700</span></span>
+                        <span class="icon-poruka youtube-hover"><a href='mailto:ordinacija@simicdent.com' class='fb'>ordinacija@simicdent.com</a></span>
+                </div>
+            </div>
+  </div>
+  <div class="nav-graphic">
+          <img alt='Simić dent' src="img/vasilic/dcv.png">
+      </div>
+</div>
+<h1 style="text-align:center; color:#999;font-size:70px;">GREŠKA 404</h1>
+<h2 style="text-align:center;color:#999 ">Stranica ne postoji</h2>
+<div class='after-before-gal'>
+        <div class="ab-close-gallery"><button>ZATVORI GALERIJU X</button></div>
+        <div id="galerija-div" class="after-before-gal-wrap">
+                        <div class="after-before-blok">
+                <img src="https://simicdent.com/glavna_galerjia/1535716377.1l-min.png" alt="">
+            </div>
+                        <div class="after-before-blok">
+                <img src="https://simicdent.com/glavna_galerjia/1535716377.3l-min.png" alt="">
+            </div>
+                        <div class="after-before-blok">
+                <img src="https://simicdent.com/glavna_galerjia/1535716377.10l-min.png" alt="">
+            </div>
+                        <div class="after-before-blok">
+                <img src="https://simicdent.com/glavna_galerjia/1535716377.9l-min.png" alt="">
+            </div>
+                        <div class="after-before-blok">
+                <img src="https://simicdent.com/glavna_galerjia/1535716377.11l-min.png" alt="">
+            </div>
+                        <div class="after-before-blok">
+                <img src="https://simicdent.com/glavna_galerjia/1535716377.14l-min.png" alt="">
+            </div>
+                        <div class="after-before-blok">
+                <img src="https://simicdent.com/glavna_galerjia/1535716377.15l-min.png" alt="">
+            </div>
+                        <div class="after-before-blok">
+                <img src="https://simicdent.com/glavna_galerjia/1535716377.22l-min.png" alt="">
+            </div>
+                        <div class="after-before-blok">
+                <img src="https://simicdent.com/glavna_galerjia/1535716377.25l-min.png" alt="">
+            </div>
+                        
+        </div>
+        <div class="load-more"><button id="load-more-bottom" value="9"></button></div>
+    </div></div>
+<!-- JavaScript -->
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://simicdent.com/js/javascript.js" defer></script> 
+
+<script>
+    // DEFER IMAGES OVER  //
+function vidDefer(){
+
+let vidDefer = $('iframe');
+
+    for(let i=0; i<vidDefer.length; i++){
+        try{
+            if(vidDefer[i].getAttribute('data-iframe')){
+                vidDefer[i].setAttribute('src',vidDefer[i].getAttribute('data-iframe'));
+            }
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+}
+
+function imgDefer(){
+let imgDefer = $('img');
+for(let i=0; i<imgDefer.length; i++){
+    try{
+        if(imgDefer[i].getAttribute('data-src')){
+            imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
+        }
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+}
+
+$(window).on('load',function(){
+    setTimeout(function(){
+        vidDefer();
+    },4000);
+imgDefer();
+})
+</script>
+
+<script>
+    ////////////////////////////////
+// Load google map
+function loadScript() {
+	$.ajax({
+		type: "GET",
+		url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDiNp0F0XpNKuyeSQPsqAQFbo46xwd8NF0&callback=initMap",
+		dataType: "script"
+	});
+}
+
+var map;
+function initMap() {
+    var latitute;
+    var langiture;
+	map = new google.maps.Map(document.getElementById('google-maps'), {
+		center: {
+            lat: 44.773950, lng: 17.191150   
+        },
+        zoom: 18,
+        styles: [
+            {
+                "featureType": "all",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "saturation": 12
+                    },
+                    {
+                        "color": "#365db4"
+                    },
+                    {
+                        "lightness": 80
+                    }
+                ]
+            },
+            {
+                "featureType": "all",
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "visibility": "on"
+                    },
+                    {
+                        "color": "#365db4"
+                    },
+                    {
+                        "lightness": 16
+                    }
+                ]
+            },
+            {
+                "featureType": "all",
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "on"
+                    },
+                    {
+                        "Lightness": -20
+                    }
+                ] 
+            },
+            {
+                "featureType": "administrative",
+                "elementType": "geometry.fill",
+                "stylers": [
+                    {
+                        "color": "#365db4"
+                    },
+                    {
+                        "lightness": 20
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "color": "#365db4"
+                    },
+                    {
+                        "lightness": 17
+                    },
+                    {
+                        "weight": 1.2
+                    }
+                ]
+            },
+            {
+                "featureType": "landscape",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#365db4"
+                    },
+                    {
+                        "lightness": 20
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#365db4"
+                    },
+                    {
+                        "lightness": 25
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry.fill",
+                "stylers": [
+                    {
+                        "color": "#365db4"
+                    },
+                    {
+                        "lightness": 10
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "color": "#365db4"
+                    },
+                    {
+                        "lightness": 100
+                    },
+                    {
+                        "weight": 0.2
+                    }
+                ]
+            },
+            {
+                "featureType": "road.arterial",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#365db4"
+                    },
+                    {
+                        "lightness": 1
+                    }
+                ]
+            },
+            {
+                "featureType": "road.local",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#365db4"
+                    },
+                    {
+                        "lightness": 1
+                    }
+                ]
+            },
+            {
+                "featureType": "transit",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#365db4"
+                    },
+                    {
+                        "lightness": 100
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#365db4"
+                    },
+                    {
+                        "lightness": 100
+                    }
+                ]
+            }
+        ]
+	});
+
+    if($(window).width() > 810 ){
+        var ardorPin = {
+            url: 'https://simicdent.com/img/pin.png'
+        };
+
+    }
+
+    else{
+        var ardorPin = {
+            url: 'https://simicdent.com/img/pin-small.png'
+        };
+    }
+
+    var marker = new google.maps.Marker({
+    position: map.getCenter(),
+    icon: ardorPin,
+    map: map
+    });
+}
+
+$(window).on('load', function() {
+	setTimeout(function() {
+        try{
+            loadScript();
+        }catch(err){
+            console.log(err);
+        }
+	}, 4000);
+});
+</script>
+
+<script type="text/javascript">
+    function episodeModal(id)
+      {
+          var episoda = $('#epizoda_'+id);
+          var attr = episoda.find('iframe').attr('src');
+          episoda.addClass('modal-anim');
+          $('body').css('overflow-y','hidden');
+         
+        
+          $('.exit-episode-modal').click(function() {  
+        $('#epizoda_'+id).find('iframe').attr('src',attr);
+        $('#epizoda_'+id).removeClass('modal-anim');
+        $('body').css('overflow', 'auto');
+    });
+
+
+}
+  </script>
+
+<script>
+    // AJAX FORMA RACUNAR
+    $('.form-button').click(function()
+       {
+           var lang = $('#lang').val();
+           var name = $('.name').val();
+           var email = $('.email').val();
+           var poruka = $('.poruka').val();
+           var telefon = $('.telefon').val();
+           var naslov = $('.naslov').val();
+           var boot = $('.boot').val();
+           var security = $('.security1_2').val();
+
+              $('.name-error').text('');
+              $('.email-error').text('');
+              $('.message-error').text('');
+              $('.naslov-error').text('');
+              $('.telefon-error').text('');
+              $('.email-respond').text('');
+          
+           $.ajax({
+               cache: false,
+               // async:false,
+               url: 'https://simicdent.com/kontakt-slanje',
+               type: "POST",
+               data: {
+                       'lang':          lang,
+                       'name':          name, 
+                       'email':         email, 
+                       'poruka':        poruka, 
+                       'telefon':       telefon, 
+                       'naslov':        naslov, 
+                       'boot' :         boot,
+                       'security1_2' :  security,
+                       _token: ''
+                      },
+
+               beforeSend: function(){
+                   
+               },
+               // complete: function(){
+               //     $('#loader-icon').hide();
+               //     },
+
+               success: function(respond)
+               {
+                   
+                  if(!respond['success'])
+                  {
+                       $('.name-error').text(respond['errors']['name']);
+                       $('.email-error').text(respond['errors']['email']);
+                       $('.message-error').text(respond['errors']['poruka']);
+                       $('.telefon-error').text(respond['errors']['telefon']);
+                       $('.naslov-error').text(respond['errors']['naslov']);
+                  }
+                  if(respond['success'])
+                  {
+                       $('.name-error').text('');
+                       $('.email-error').text('');
+                       $('.message-error').text('');
+                       $('.telefon-error').text('');
+                       $('.naslov-error').text('');
+                       
+                       $('.name').val('');
+                       $('.email').val('');
+                       $('.poruka').val('');
+                       $('.naslov').val('');
+                       $('.telefon').val('');
+
+                       if(lang == 'en')
+                       {
+                        $('.alert-succ').css('display', 'block').html('Message sent successfully');
+                       }
+                       else if(lang == 'de')
+                       {
+                        $('.alert-succ').css('display', 'block').html('Nachricht erfolgreich gesendet');
+                       }
+                       else if(lang == 'it')
+                       {
+                        $('.alert-succ').css('display', 'block').html('Messaggio inviato con successo');
+                       }
+                       else if(lang == 'slo')
+                       {
+                        $('.alert-succ').css('display', 'block').html('Sporočilo je bilo uspešno poslano');
+                       }
+                       else
+                       {
+                        $('.alert-succ').css('display', 'block').html('Uspješno ste poslali poruku');
+                       }
+                        
+                       
+
+                  }
+                  if(respond['send-error'])
+                  {
+                          $('.email-respond').text('Došlo je do neočekivane greške. Pokušajte ponovo.');
+
+                  }
+               },
+               error: function(XMLHttpRequest, textStatus, errorThrown, respond)
+               {
+                   console.log(XMLHttpRequest);
+                   console.log(textStatus);
+                   console.log(errorThrown);
+               }            
+           });
+       });
+
+     // AJAX FORMA TELEFON
+    $('.form-button-telefon').click(function()
+       {
+           var lang = $('.lang').val();
+           var name_telefon = $('.name-telefon').val();
+           var email_telefon = $('.email-telefon').val();
+           var poruka_telefon = $('.poruka-telefon').val();
+           var telefon_telefon = $('.telefon-telefon').val();
+           var naslov_telefon = $('.naslov-telefon').val();
+           var boot = $('.boot').val();
+
+              $('.name-error').text('');
+              $('.email-error').text('');
+              $('.message-error').text('');
+              $('.naslov-error').text('');
+              $('.telefon-error').text('');
+              $('.captcha-error').text('');
+              $('.email-respond').text('');
+          
+           $.ajax({
+               cache: false,
+               // async:false,
+               url: 'https://simicdent.com/kontakt-slanje-responsive',
+               type: "POST",
+               data: {
+                       'lang': lang,
+                       'name_telefon':name_telefon, 
+                       'email_telefon':email_telefon, 
+                       'poruka_telefon':poruka_telefon, 
+                       'telefon_telefon':telefon_telefon, 
+                       'naslov_telefon':naslov_telefon,
+                       'boot':boot, 
+                       captcha_dva: grecaptcha.getResponse(),
+                       _token: ''
+                      },
+
+               beforeSend: function(){
+                   // grecaptcha.reset();
+               },
+               // complete: function(){
+               //     $('#loader-icon').hide();
+               //     },
+
+               success: function(respond)
+               {
+                   
+                  if(!respond['success'])
+                  {
+                       $('.name-error').text(respond['errors']['name_telefon']);
+                       $('.email-error').text(respond['errors']['email_telefon']);
+                       $('.message-error').text(respond['errors']['poruka_telefon']);
+                       $('.telefon-error').text(respond['errors']['telefon_telefon']);
+                       $('.naslov-error').text(respond['errors']['naslov_telefon']);
+                       $('.captcha-error').text(respond['errors']['captcha_dva']);
+                  }
+                  if(respond['success'])
+                  {
+                       $('.name-error').text('');
+                       $('.email-error').text('');
+                       $('.message-error').text('');
+                       $('.telefon-error').text('');
+                       $('.naslov-error').text('');
+                       $('.captcha-error').text('');
+                       $('.name-telefon').val('');
+                       $('.email-telefon').val('');
+                       $('.poruka-telefon').val('');
+                       $('.naslov-telefon').val('');
+                       $('.telefon-telefon').val('');
+
+                       
+                       $(document).ajaxStop(function(){
+                          window.location.reload();
+                      });
+
+                  }
+                  if(respond['send-error'])
+                  {
+                          $('.email-respond').text('Došlo je do neočekivane greške. Pokušajte ponovo.');
+
+                  }
+               },
+               error: function(XMLHttpRequest, textStatus, errorThrown, respond)
+               {
+                   console.log(XMLHttpRequest);
+                   console.log(textStatus);
+                   console.log(errorThrown);
+               }            
+           });
+       });
+</script>
+
+<!--AJAX GALERIJA-->
+<script>
+
+        $('.after-before-gal-wrap').on('scroll', function() {
+                if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+            
+           var brojac = parseInt($('#load-more-bottom').val());
+
+            $.ajax({
+               cache: false,
+                async:false,
+               url: 'https://simicdent.com/glavna-galerija-ajax/'+brojac,
+               type: "GET",
+
+               beforeSend: function(){
+                $('#load-more-bottom').html("<img style='height:100%;width:auto;' src='https://simicdent.com/img/before-load.svg'>");
+               },
+
+               success: function(respond)
+               { 
+                $('#load-more-bottom').html(""); 
+               
+                if(!respond){
+                        $('#load-more-bottom').html("");  
+                    }
+                    $('.after-before-gal-wrap').append(respond);
+                    $('#load-more-bottom').val(3 + brojac);  
+                    console.log(brojac)
+               },
+               error: function(XMLHttpRequest, textStatus, errorThrown, respond)
+               {
+                   console.log(XMLHttpRequest);
+                   console.log(textStatus);
+                   console.log(errorThrown);
+               }            
+           });
+        }
+            })
+   
+</script>
+
+
+</body>
+</html>
