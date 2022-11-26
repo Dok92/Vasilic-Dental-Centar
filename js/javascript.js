@@ -189,19 +189,6 @@ function initMap() {
         ]
 	});
 
-    if($(window).width() > 810 ){
-        var ardorPin = {
-            // url: 'https://simicdent.com/img/pin.png'
-        };
-
-    }
-
-    else{
-        var ardorPin = {
-            // url: 'https://simicdent.com/img/pin-small.png'
-        };
-    }
-
     var marker = new google.maps.Marker({
     position: map.getCenter(),
     icon: ardorPin,
